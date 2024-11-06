@@ -7,6 +7,7 @@ Note: You need to work on this file for the Assignment.
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import AccountBalance from './AccountBalance';
 import './Credits.css';
 
 
@@ -69,6 +70,7 @@ class Credits extends Component {
     return (
       <div>
         <h1>Credits</h1>
+        <AccountBalance accountBalance={this.props.accountBalance} /> {/* Display account balance */}
 
         {/* Display list of credits */}
         <ul>
