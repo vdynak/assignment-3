@@ -15,7 +15,7 @@ import Credits from './components/Credits';
 import Debits from './components/Debits';
 
 class App extends Component {
-  constructor() {  // Create and initialize state
+  constructor() {  
     super(); 
     this.state = {
       accountBalance: 1234567.89,
@@ -37,10 +37,16 @@ class App extends Component {
       date: new Date().toISOString().slice(0, 10), // Current date in yyyy-mm-dd format
     };
 
-    // Update the state with new credit and adjusted balance
     this.setState((prevState) => ({
       accountBalance: parseFloat(prevState.accountBalance + parseFloat(amount)).toFixed(2),
       creditList: [...prevState.creditList, newCredit]
+    }));
+  };
+
+  // Function to update the balance and add a debit
+  updateBalance = (amount) => {
+    this.setState((prevState) => ({
+      accountBalance: parseFloat(prevState.accountBalance + amount).toFixed(2)
     }));
   };
 
@@ -51,9 +57,7 @@ class App extends Component {
     this.setState({ currentUser: newUser });
   }
 
-  // Create Routes and React elements to be rendered using React components
   render() {  
-    // Create React elements and pass input props to components
     const HomeComponent = () => (<Home accountBalance={this.state.accountBalance} />);
     const UserProfileComponent = () => (
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
@@ -63,11 +67,17 @@ class App extends Component {
       <Credits 
         credits={this.state.creditList} 
         updateBalance={this.updatedBalance} // Pass update function to Credits
+        accountBalance={this.state.accountBalance}
       />
     );
-    const DebitsComponent = () => (<Debits debits={this.state.debitList} />);
+    const DebitsComponent = () => (
+      <Debits 
+        debits={this.state.debitList}
+        updateBalance={this.updateBalance} // Pass updateBalance to Debits
+        accountBalance={this.state.accountBalance}
+      />
+    );
 
-    // Important: Include the "basename" in Router, which is needed for deploying the React app to GitHub Pages
     return (
       <Router basename="/assignment-3">
         <div>
@@ -83,3 +93,4 @@ class App extends Component {
 }
 
 export default App;
+
