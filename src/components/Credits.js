@@ -4,29 +4,24 @@ src/components/Credits.js
 The Credits component contains information for Credits page view.
 Note: You need to work on this file for the Assignment.
 ==================================================*/
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AccountBalance from './AccountBalance';
 import './Credits.css';
-
 
 class Credits extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      credits: [], // List of credits
-      updatedDescription: '', // New credit description
-      updatedAmount: '', // New credit amount
+      credits: [],
+      updatedDescription: '',
+      updatedAmount: '',
     };
   }
 
   componentDidMount() {
-    // Fetch data from the API endpoint when the component mounts
     fetch('https://johnnylaicode.github.io/api/credits.json')
       .then((response) => response.json())
       .then((data) => {
-        // Update state with the fetched credits data
         this.setState({ credits: data });
       })
       .catch((error) => console.error('Error fetching credits:', error));
@@ -47,62 +42,80 @@ class Credits extends Component {
       return;
     }
 
-    // Create a new credit object
     const newCredit = {
-      id: this.state.credits.length + 1, // Unique ID for the new credit
+      id: this.state.credits.length + 1,
       description: updatedDescription,
-      amount: parseFloat(updatedAmount).toFixed(2), // Format to two decimal places
-      date: new Date().toISOString().slice(0, 10), // Current date in yyyy-mm-dd format
+      amount: parseFloat(updatedAmount).toFixed(2),
+      date: new Date().toISOString().slice(0, 10),
     };
 
-    // Update credits list and clear input fields
     this.setState((prevState) => ({
       credits: [...prevState.credits, newCredit],
       updatedDescription: '',
       updatedAmount: '',
     }));
 
-    // Update account balance
     this.props.updateBalance(parseFloat(updatedAmount));
   };
 
   render() {
     return (
-      <div>
-        <h1>Credits</h1>
-        <AccountBalance accountBalance={this.props.accountBalance} /> {/* Display account balance */}
-
-        {/* Display list of credits */}
-        <ul>
-          {this.state.credits.map((credit) => (
-            <li key={credit.id}>
-              <p>Description: {credit.description}</p>
-              <p>Amount: {parseFloat(credit.amount).toFixed(2)}</p>
-              <p>Date: {new Date(credit.date).toISOString().slice(0, 10)}</p>
-            </li>
-          ))}
-        </ul>
-
-        {/* Input fields for adding new credit */}
-        <h2>Add a New Credit</h2>
-        <div>
-          <input
-            type="text"
-            placeholder="Description"
-            value={this.state.updatedDescription}
-            onChange={this.handleDescriptionChange}
-          />
-          <input
-            type="number"
-            placeholder="Amount"
-            value={this.state.updatedAmount}
-            onChange={this.handleAmountChange}
-          />
-          <button onClick={this.addCredit}>Add Credit</button>
+      <div className="credits-container">
+        {/* Account Balance Display */}
+        <div className="account-balance">
+          <p>Account Balance</p>
+          <p>${this.props.accountBalance}</p>
         </div>
 
-        <br />
-        <Link to="/">Return to Home</Link>
+        {/* Credits Table and Form */}
+        <div className="credits-table-container">
+          <h1>Credits</h1>
+
+          {/* Table for credits */}
+          <table className="credits-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.credits.map((credit) => (
+                <tr key={credit.id}>
+                  <td>{credit.description}</td>
+                  <td>${parseFloat(credit.amount).toFixed(2)}</td>
+                  <td>{credit.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Add Credit Form */}
+          <div className="add-credit-container">
+            <h2>Add a New Credit</h2>
+            <input
+              type="text"
+              placeholder="Description"
+              value={this.state.updatedDescription}
+              onChange={this.handleDescriptionChange}
+              className="add-credit-input"
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={this.state.updatedAmount}
+              onChange={this.handleAmountChange}
+              className="add-credit-input"
+            />
+            <button onClick={this.addCredit} className="add-credit-button">
+              Add Credit
+            </button>
+          </div>
+
+          <br />
+          <Link to="/">Return to Home</Link>
+        </div>
       </div>
     );
   }

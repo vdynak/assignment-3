@@ -47,7 +47,7 @@ const Debits = (props) => {
 
     // Update debits list with new debit and update balance in App component
     setDebits([...debits, newDebit]);
-    props.updateBalance(-parseFloat(amount)); // Deduct from account balance in parent component
+    props.updateBalance(parseFloat(amount)); // Deduct from account balance in parent component
   };
 
   // Existing debitsView function to render list of debits
