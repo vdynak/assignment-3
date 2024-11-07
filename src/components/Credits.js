@@ -61,17 +61,17 @@ class Credits extends Component {
   render() {
     return (
       <div className="credits-container">
-        {/* Account Balance Display */}
-        <div className="account-balance">
-          <p>Account Balance</p>
-          <p>${this.props.accountBalance}</p>
-        </div>
+        {/* Header with account balance */}
+        <header className="credits-header">
+          <h1>Credits</h1>
+          <div className="balance-display green-balance">
+            <span className="balance-icon">💰</span>
+            <span>Balance: ${this.props.accountBalance}</span>
+          </div>
+        </header>
 
         {/* Credits Table and Form */}
         <div className="credits-table-container">
-          <h1>Credits</h1>
-
-          {/* Table for credits */}
           <table className="credits-table">
             <thead>
               <tr>
