@@ -6,59 +6,69 @@ Note: You don't need to work on this file for the Assignment.
 ==================================================*/
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './Login.css';
 
 class LogIn extends Component {
-  constructor (props) {  // Create and initialize state
-    super(props)
+  constructor(props) {  
+    super(props);
     this.state = {
       user: {
-        //userName: '',
-        userName: this.props.user.userName,  // Initialize userName using props input (currentUser in App.js)
+        userName: this.props.user.userName,
         password: ''
       },
-      redirect: false  // Redirect property used to trigger Redirect
-    }
+      redirect: false
+    };
   }
 
-  // When User Name input is changed, capture the new input value and update state
   handleChange = (e) => {
-    const updatedUser = {...this.state.user};  // Create an object for state
-    updatedUser.userName = e.target.value;  // Set object's userName to the new input value
-    this.setState({user: updatedUser})  // Update state with object values
-  }
+    const updatedUser = { ...this.state.user };
+    updatedUser.userName = e.target.value;
+    this.setState({ user: updatedUser });
+  };
 
-  // When user clicked "Log In" button, store user data and then redirect to "User Profile" page
   handleSubmit = (e) => {
-    e.preventDefault()
-    this.props.mockLogIn(this.state.user)  // Update state in the top-level component (App.js)
-    this.setState({redirect: true})  // Update state to trigger Redirect
-  }
+    e.preventDefault();
+    this.props.mockLogIn(this.state.user);
+    //Simualtes a mock login, doesnt actually login, but gives the appearance of this.
+    this.setState({ redirect: true });
+  };
   
-  render () {
-    // Redirect to "User Profile" page when "Log In" button is clicked
+  render() {
     if (this.state.redirect) {  
-      return (<Redirect to="/userProfile"/>);
+      return <Redirect to="/userProfile" />;
     }
 
-    // Render the login form (and call "handleSubmit" method when "Log In" button is clicked to submit form)
     return (
-      <div>
-        <h1>Login</h1>
-        
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>User Name</label>
-            <input type="text" name="userName" defaultValue={this.props.user.userName} onChange={this.handleChange} />
-          </div>
-          <div>
-            <label>Password</label>
-            <input type="password" name="password" />
-          </div>
-          <button>Log In</button>
-        </form>  
-        <br/>
-        <Link to="/">Return to Home</Link>
+      <div className="login-container">
+        <div className="login-card">
+          <h1>Login</h1>
+          
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="userName">User Name</label>
+              <input
+                type="text"
+                name="userName"
+                defaultValue={this.props.user.userName}
+                onChange={this.handleChange}
+                className="form-input"
+                id="userName"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                className="form-input"
+                id="password"
+              />
+            </div>
+            <button className="login-button">Log In</button>
+          </form>  
+          <Link to="/" className="return-button">Return to Home</Link>
+        </div>
       </div>
     );
   }
