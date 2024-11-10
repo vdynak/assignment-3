@@ -85,7 +85,7 @@ class Credits extends Component {
                 <tr key={credit.id}>
                   <td>{credit.description}</td>
                   <td>${parseFloat(credit.amount).toFixed(2)}</td>
-                  <td>{credit.date}</td>
+                  <td>{credit.date.slice(0, 10)}</td>
                 </tr>
               ))}
             </tbody>
