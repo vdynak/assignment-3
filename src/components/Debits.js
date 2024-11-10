@@ -84,7 +84,7 @@ const Debits = (props) => {
               <tr key={debit.id}>
                 <td>{debit.description}</td>
                 <td>${debit.amount}</td>
-                <td>{debit.date}</td>
+                <td>{debit.date.slice(0, 10)}</td>
               </tr>
             ))}
           </tbody>
