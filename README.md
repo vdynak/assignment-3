@@ -1,8 +1,8 @@
-#bank-of-react-final-iteration
+# bank-of-react-final-iteration
 This repository is the live website for Assignment 3 - Bank of React.
 
 ### Live Link
-[Webiste link](https://vdynak.github.io/assignment-3/)
+[Website link](https://vdynak.github.io/assignment-3/)
 
 
 
